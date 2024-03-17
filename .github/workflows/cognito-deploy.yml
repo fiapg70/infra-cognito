@@ -47,7 +47,7 @@ jobs:
           if [ "${tf_action}" == 'apply' ]; then
             terraform apply -auto-approve
           elif [ "${tf_action}" == 'destroy' ]; then
-            terraform destroy -input=false -auto-approve
+            terraform destroy -auto-approve
           else
             echo "Invalid TFAction value. Please provide 'apply' or 'destroy'."
             exit 1
