@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       TFAction:
-        description: "Terraform Action- Apply or Destroy"     
+        description: "Terraform Apply or Destroy"     
         required: true
         default: "apply"
 
