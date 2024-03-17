@@ -11,7 +11,7 @@ output "user_pool_name" {
 }
 
 output "client_callback_url" {
-  value = aws_cognito_user_pool_client.user_pool_client.callback_urls[0]
+  value = tolist(aws_cognito_user_pool_client.user_pool_client.callback_urls)[0]
 }
 
 output "user_group_id" {
