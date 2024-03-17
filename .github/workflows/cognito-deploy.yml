@@ -6,10 +6,9 @@ on:
       - main
   workflow_call:
     inputs:
-      TFAction:
+      tf_action:
         required: true
         type: string
-        default: "apply"
         
 jobs:
   terraform:
@@ -38,9 +37,9 @@ jobs:
 
       - name: Terraform Apply or Destroy
         run: |
-          if [ ${{ github.event.inputs.TFAction }} == 'apply' ]; then
+          if [ ${{ inputs.tf_action }} == 'apply' ]; then
             terraform apply -auto-approve
-          elif [ ${{ github.event.inputs.TFAction }} == 'destroy' ]; then
+          elif [ ${{ inputs.tf_action }} == 'destroy' ]; then
             terraform destroy -input=false -auto-approve
           else
             echo "Invalid TFAction value. Please provide 'apply' or 'destroy'."
