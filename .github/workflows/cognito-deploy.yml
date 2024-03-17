@@ -4,16 +4,16 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
-    inputs:
-      TFAction:
-        description: "Terraform Apply or Destroy"     
-        required: true
-        default: "apply"
-
+      
 jobs:
   terraform:
     runs-on: ubuntu-latest
+
+    inputs:
+      TFAction:
+        description: 'Enter TFAction value (apply or destroy)'
+        required: true
+        default: 'apply'
 
     steps:
       - name: Checkout Repository
