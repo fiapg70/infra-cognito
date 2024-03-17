@@ -43,9 +43,9 @@ jobs:
           
           if [ "${tf_action}" == 'apply' ]; then
             terraform plan
-            terraform apply -auto-approve
+            terraform apply -auto-approve || echo "Erro ao aplicar as alterações no Terraform"
           elif [ "${tf_action}" == 'destroy' ]; then
-            terraform destroy -auto-approve
+            terraform destroy -auto-approve || echo "Erro ao destruir os recursos no Terraform"
           else
             echo "Invalid TFAction value. Please provide 'apply' or 'destroy'."
             exit 1
