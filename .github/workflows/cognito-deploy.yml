@@ -9,6 +9,7 @@ on:
       TFAction:
         required: true
         type: string
+        default: "apply"
         
 jobs:
   terraform:
@@ -37,9 +38,9 @@ jobs:
 
       - name: Terraform Apply or Destroy
         run: |
-          if [ ${{ inputs.TFAction }} == 'apply' ]; then
+          if [ ${{ github.event.inputs.TFAction }} == 'apply' ]; then
             terraform apply -auto-approve
-          elif [ ${{ inputs.TFAction }} == 'destroy' ]; then
+          elif [ ${{ github.event.inputs.TFAction }} == 'destroy' ]; then
             terraform destroy -input=false -auto-approve
           else
             echo "Invalid TFAction value. Please provide 'apply' or 'destroy'."
