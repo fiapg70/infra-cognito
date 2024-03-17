@@ -32,4 +32,10 @@ jobs:
         run: terraform plan
 
       - name: Terraform Apply
+        if: ${{ inputs.TFAction == 'apply'}}
         run: terraform apply -auto-approve
+
+      - name: Terraform Destroy
+        if: ${{ inputs.TFAction == 'destroy'}}
+        run: terraform destroy -input=false -auto-approve
+
