@@ -41,7 +41,7 @@ jobs:
           if [ "${{ github.event_name }}" == 'push' ]; then
             tf_action="apply"
           else
-            tf_action="${{ github.event.inputs.tf_action }}"
+            tf_action="${{ inputs.tf_action }}"
           fi
           
           if [ "${tf_action}" == 'apply' ]; then
