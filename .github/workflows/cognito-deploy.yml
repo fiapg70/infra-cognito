@@ -4,17 +4,18 @@ on:
   push:
     branches:
       - main
-      
+  workflow_dispatch:
+    inputs:
+      username:
+        required: true
+        type: string
+      password:
+        required: true
+        type: string
+        
 jobs:
   terraform:
     runs-on: ubuntu-latest
-
-    inputs:
-      TFAction:
-        description: 'Enter TFAction value (apply or destroy)'
-        required: true
-        default: 'apply'
-
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -39,9 +40,9 @@ jobs:
 
       - name: Terraform Apply or Destroy
         run: |
-          if [ ${{ github.event.inputs.TFAction }} == 'apply' ]; then
+          if [ ${{ inputs.TFAction }} == 'apply' ]; then
             terraform apply -auto-approve
-          elif [ ${{ github.event.inputs.TFAction }} == 'destroy' ]; then
+          elif [ ${{ inputs.TFAction }} == 'destroy' ]; then
             terraform destroy -input=false -auto-approve
           else
             echo "Invalid TFAction value. Please provide 'apply' or 'destroy'."
