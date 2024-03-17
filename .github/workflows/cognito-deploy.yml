@@ -4,12 +4,9 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
+  workflow_call:
     inputs:
-      username:
-        required: true
-        type: string
-      password:
+      TFAction:
         required: true
         type: string
         
