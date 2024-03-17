@@ -31,11 +31,14 @@ jobs:
       - name: Terraform Plan
         run: terraform plan
 
-      - name: Terraform Apply
-        if: ${{ inputs.TFAction == 'apply'}}
-        run: terraform apply -auto-approve
-
-      - name: Terraform Destroy
-        if: ${{ inputs.TFAction == 'destroy'}}
-        run: terraform destroy -input=false -auto-approve
+      - name: Terraform Apply or Destroy
+        run: |
+          if [ ${{ inputs.TFAction }} == 'apply' ]; then
+            terraform apply -auto-approve
+          elif [ ${{ inputs.TFAction }} == 'destroy' ]; then
+            terraform destroy -input=false -auto-approve
+          else
+            echo "Invalid TFAction value. Please provide 'apply' or 'destroy'."
+            exit 1
+          fi
 
