@@ -108,7 +108,7 @@ resource "aws_cognito_user_group" "doctors" {
 
 resource "aws_cognito_user_group" "patients" {
   name         = "patients"
-  user_pool_id = aws_cognito_user_pool.healthmed.id
+  user_pool_id = aws_cognito_user_pool.user_pool["healthmed"].id
   description  = "Pacientes da HealthMed"
 }
 
@@ -120,7 +120,7 @@ resource "aws_cognito_user_group" "patients" {
 # ------------------------------
 
 resource "aws_cognito_user" "doctor_1" {
-  user_pool_id = aws_cognito_user_pool.healthmed.id
+  user_pool_id = aws_cognito_user_pool.user_pool["healthmed"].id
   username     = "597670-MG" # CRM 
   password     = "Admin@123"
 
