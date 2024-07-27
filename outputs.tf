@@ -17,3 +17,7 @@ output "client_callback_urls" {
 output "user_group_ids" {
   value = { for k, v in aws_cognito_user_group.user_group : k => v.id }
 }
+
+output "client_secrets" {
+  value = { for k, v in aws_cognito_user_pool_client.user_pool_client : k => v.client_secret }
+}
