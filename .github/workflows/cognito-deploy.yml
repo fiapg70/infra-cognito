@@ -1,9 +1,19 @@
-name: Deploy RDS
+name: Deploy e Destroy Cognito
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      action:
+        description: 'Select action: deploy or destroy'
+        required: true
+        default: 'deploy'
+        type: choice
+        options:
+          - deploy
+          - destroy
 
 jobs:
   terraform:
