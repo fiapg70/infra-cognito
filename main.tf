@@ -10,7 +10,7 @@ variable "user_pools" {
     callback_urls = list(string)
   }))
   default = {
-    "healthmed" = {
+    "sevenfood" = {
       name         = "sevenfood-user-pool"
       client_name  = "sevenfood-app-client"
       callback_urls = ["https://sevenfood.com.br/callback"]
