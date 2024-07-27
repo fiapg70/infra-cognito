@@ -67,8 +67,6 @@ resource "aws_cognito_user_pool" "user_pool" {
     }
   }
 
-  alias_attributes = ["email", "phone_number"] # Permite o usuário logar também usando e-mail ou número de telefone
-
   username_configuration {
     case_sensitive = false
   }
@@ -104,7 +102,7 @@ resource "aws_cognito_user_group" "user_group" {
 
 resource "aws_cognito_user_group" "doctors" {
   name         = "doctors"
-  user_pool_id = aws_cognito_user_pool.healthmed.id
+  user_pool_id = aws_cognito_user_pool.user_pool["healthmed"].id
   description  = "Médicos da HealthMed"
 }
 
@@ -134,7 +132,7 @@ resource "aws_cognito_user" "doctor_1" {
 }
 
 resource "aws_cognito_user_in_group" "doctor_1" {
-  user_pool_id = aws_cognito_user_pool.healthmed.id
+  user_pool_id = aws_cognito_user_pool.user_pool["healthmed"].id
   group_name   = aws_cognito_user_group.doctors.name
   username     = aws_cognito_user.doctor_1.username
 }
@@ -142,7 +140,7 @@ resource "aws_cognito_user_in_group" "doctor_1" {
 # ----------
 
 resource "aws_cognito_user" "doctor_2" {
-  user_pool_id = aws_cognito_user_pool.healthmed.id
+  user_pool_id = aws_cognito_user_pool.user_pool["healthmed"].id
   username     = "236467-MG" # CRM 
   password     = "Admin@123"
 
@@ -154,7 +152,7 @@ resource "aws_cognito_user" "doctor_2" {
 }
 
 resource "aws_cognito_user_in_group" "doctor_2" {
-  user_pool_id = aws_cognito_user_pool.healthmed.id
+  user_pool_id = aws_cognito_user_pool.user_pool["healthmed"].id
   group_name   = aws_cognito_user_group.doctors.name
   username     = aws_cognito_user.doctor_2.username
 }
@@ -163,7 +161,7 @@ resource "aws_cognito_user_in_group" "doctor_2" {
 # ------------------------------
 
 resource "aws_cognito_user" "patient_1" {
-  user_pool_id = aws_cognito_user_pool.healthmed.id
+  user_pool_id = aws_cognito_user_pool.user_pool["healthmed"].id
   username     = "26550603269" # CPF
   password     = "Mudar@123"
 
@@ -174,7 +172,7 @@ resource "aws_cognito_user" "patient_1" {
 }
 
 resource "aws_cognito_user_in_group" "patient_1" {
-  user_pool_id = aws_cognito_user_pool.healthmed.id
+  user_pool_id = aws_cognito_user_pool.user_pool["healthmed"].id
   group_name   = aws_cognito_user_group.patients.name
   username     = aws_cognito_user.patient_1.username
 }
