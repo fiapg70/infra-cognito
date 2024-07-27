@@ -82,6 +82,13 @@ resource "aws_cognito_user_pool" "user_pool" {
     mutable             = true
   }
 
+  schema {
+    name                = "custom:id"
+    attribute_data_type = "String"
+    required            = false
+    mutable             = true
+  }
+
   username_configuration {
     case_sensitive = false
   }
@@ -140,9 +147,11 @@ resource "aws_cognito_user" "doctor_1" {
   password     = "Admin@123"
 
   attributes = {
-    "custom:id" = "87299678-a39f-46ff-a849-79c35f561945"
+    "custom:id" = "ff05d25e-8027-473e-afd7-a0ec59dc571c"
     name        = "Anna Galindo Rodrigues"
     email       = "anna.galindo.rodrigues@healthmed.com.br"
+    "custom:crm" = "597670-MG"
+    preferred_username = "597670-MG"
   }
 }
 
@@ -160,9 +169,11 @@ resource "aws_cognito_user" "doctor_2" {
   password     = "Admin@123"
 
   attributes = {
-    "custom:id" = "3fb50be0-b77b-4f9f-8288-adcccb79a234"
+    "custom:id" = "70d57e1a-30b2-407d-a75c-8ff7643c8460"
     name        = "Heitor Bittencourt de Azevedo"
     email       = "heitor.bittencourt.azevedo@healthmed.com.br"
+    "custom:crm" = "236467-MG"
+    preferred_username = "236467-MG"
   }
 }
 
@@ -181,8 +192,11 @@ resource "aws_cognito_user" "patient_1" {
   password     = "Mudar@123"
 
   attributes = {
+    "custom:id" = "1e8352d3-8c13-4cdc-b044-8e266c5f5154"
     name  = "Ketlin Silvana Aragão de Torres"
     email = "ketlin.silvana.aragao.torres@gmail.com"
+    "custom:cpf" = "12345678900"
+    preferred_username = "597670-MG"
   }
 }
 
