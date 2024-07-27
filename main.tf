@@ -5,8 +5,8 @@ provider "aws" {
 # Variáveis
 variable "user_pools" {
   type = map(object({
-    name       = string
-    client_name = string
+    name         = string
+    client_name  = string
     callback_urls = list(string)
   }))
   default = {
