@@ -48,6 +48,7 @@ resource "aws_cognito_user_pool" "user_pool" {
     attribute_data_type = "String"
     required            = true 
   }
+
   schema {
     name                     = "email"
     attribute_data_type      = "String"
@@ -58,6 +59,26 @@ resource "aws_cognito_user_pool" "user_pool" {
       max_length = "2048"
       min_length = "0"
     }
+  }
+
+  schema {
+    name                = "preferred_username"
+    attribute_data_type = "String"
+    required            = false
+  }
+
+  schema {
+    name                = "custom:crm"
+    attribute_data_type = "String"
+    required            = false
+    mutable             = true
+  }
+
+  schema {
+    name                = "custom:cpf"
+    attribute_data_type = "String"
+    required            = false
+    mutable             = true
   }
 
   username_configuration {
