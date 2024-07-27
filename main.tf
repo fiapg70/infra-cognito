@@ -40,17 +40,39 @@ resource "aws_cognito_user_pool" "user_pool" {
     }
   }
 
+  deletion_protection = "INACTIVE"
+  mfa_configuration   = "OFF"
+
   schema {
+    name                = "name"
     attribute_data_type = "String"
+    required            = true # Torna o atributo 'name' obrigatório ao se registrar
+  }
+
+  schema {
+    name                = "email"
+    attribute_data_type = "String"
+    required            = true # Torna o atributo 'email' obrigatório ao se registrar
+  }
+
+  schema {
+    attribute_data_type      = "String"
     developer_only_attribute = false
-    mutable                 = true
-    name                    = "email"
-    required                = true
+    mutable                  = true
+    name                     = "email"
+    required                 = true
     string_attribute_constraints {
       max_length = "2048"
       min_length = "0"
     }
   }
+
+  alias_attributes = ["email", "phone_number"] # Permite o usuário logar também usando e-mail ou número de telefone
+
+  username_configuration {
+    case_sensitive = false
+  }
+
 }
 
 # Criando múltiplos user pool clients
@@ -63,7 +85,7 @@ resource "aws_cognito_user_pool_client" "user_pool_client" {
   allowed_oauth_scopes          = ["email", "openid", "profile"]
   callback_urls                 = each.value.callback_urls
   allowed_oauth_flows_user_pool_client = true
-  explicit_auth_flows           = ["ALLOW_REFRESH_TOKEN_AUTH"]
+  explicit_auth_flows           = ["ALLOW_USER_PASSWORD_AUTH","ALLOW_REFRESH_TOKEN_AUTH"]
   generate_secret               = false
 }
 
@@ -74,4 +96,85 @@ resource "aws_cognito_user_group" "user_group" {
   name        = each.value.client_name
   user_pool_id = aws_cognito_user_pool.user_pool[each.key].id
   description = "User group for ${each.value.client_name}"
+}
+
+################################################################################
+# Grupos
+################################################################################
+
+resource "aws_cognito_user_group" "doctors" {
+  name         = "doctors"
+  user_pool_id = aws_cognito_user_pool.healthmed.id
+  description  = "Médicos da HealthMed"
+}
+
+resource "aws_cognito_user_group" "patients" {
+  name         = "patients"
+  user_pool_id = aws_cognito_user_pool.healthmed.id
+  description  = "Pacientes da HealthMed"
+}
+
+################################################################################
+# Users
+################################################################################
+
+# Medics
+# ------------------------------
+
+resource "aws_cognito_user" "doctor_1" {
+  user_pool_id = aws_cognito_user_pool.healthmed.id
+  username     = "597670-MG" # CRM 
+  password     = "Admin@123"
+
+  attributes = {
+    "custom:id" = "87299678-a39f-46ff-a849-79c35f561945"
+    name        = "Anna Galindo Rodrigues"
+    email       = "anna.galindo.rodrigues@healthmed.com.br"
+  }
+}
+
+resource "aws_cognito_user_in_group" "doctor_1" {
+  user_pool_id = aws_cognito_user_pool.healthmed.id
+  group_name   = aws_cognito_user_group.doctors.name
+  username     = aws_cognito_user.doctor_1.username
+}
+
+# ----------
+
+resource "aws_cognito_user" "doctor_2" {
+  user_pool_id = aws_cognito_user_pool.healthmed.id
+  username     = "236467-MG" # CRM 
+  password     = "Admin@123"
+
+  attributes = {
+    "custom:id" = "3fb50be0-b77b-4f9f-8288-adcccb79a234"
+    name        = "Heitor Bittencourt de Azevedo"
+    email       = "heitor.bittencourt.azevedo@healthmed.com.br"
+  }
+}
+
+resource "aws_cognito_user_in_group" "doctor_2" {
+  user_pool_id = aws_cognito_user_pool.healthmed.id
+  group_name   = aws_cognito_user_group.doctors.name
+  username     = aws_cognito_user.doctor_2.username
+}
+
+# Pacientes
+# ------------------------------
+
+resource "aws_cognito_user" "patient_1" {
+  user_pool_id = aws_cognito_user_pool.healthmed.id
+  username     = "26550603269" # CPF
+  password     = "Mudar@123"
+
+  attributes = {
+    name  = "Ketlin Silvana Aragão de Torres"
+    email = "ketlin.silvana.aragao.torres@gmail.com"
+  }
+}
+
+resource "aws_cognito_user_in_group" "patient_1" {
+  user_pool_id = aws_cognito_user_pool.healthmed.id
+  group_name   = aws_cognito_user_group.patients.name
+  username     = aws_cognito_user.patient_1.username
 }
