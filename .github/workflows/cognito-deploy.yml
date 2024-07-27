@@ -48,3 +48,4 @@ jobs:
       - name: Terraform Destroy
         if: ${{ inputs.TFAction == 'destroy'}}
         run: terraform destroy -input=false -auto-approve
+
