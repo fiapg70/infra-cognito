@@ -46,20 +46,13 @@ resource "aws_cognito_user_pool" "user_pool" {
   schema {
     name                = "name"
     attribute_data_type = "String"
-    required            = true # Torna o atributo 'name' obrigatório ao se registrar
+    required            = true 
   }
-
   schema {
-    name                = "email"
-    attribute_data_type = "String"
-    required            = true # Torna o atributo 'email' obrigatório ao se registrar
-  }
-
-  schema {
+    name                     = "email"
     attribute_data_type      = "String"
     developer_only_attribute = false
     mutable                  = true
-    name                     = "email"
     required                 = true
     string_attribute_constraints {
       max_length = "2048"
