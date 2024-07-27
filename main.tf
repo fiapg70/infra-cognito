@@ -195,7 +195,7 @@ resource "aws_cognito_user" "patient_1" {
     id = "1e8352d3-8c13-4cdc-b044-8e266c5f5154"
     name  = "Ketlin Silvana Aragão de Torres"
     email = "ketlin.silvana.aragao.torres@gmail.com"
-    custom = "12345678900"
+    cpf = "12345678900"
     preferred_username = "12345678900"
   }
 }
