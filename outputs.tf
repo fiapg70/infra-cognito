@@ -1,19 +1,19 @@
-output "user_pool_id" {
-  value = aws_cognito_user_pool.user_pool.id
+output "user_pool_ids" {
+  value = { for k, v in aws_cognito_user_pool.user_pool : k => v.id }
 }
 
-output "user_pool_client_id" {
-  value = aws_cognito_user_pool_client.user_pool_client.id
+output "user_pool_client_ids" {
+  value = { for k, v in aws_cognito_user_pool_client.user_pool_client : k => v.id }
 }
 
-output "user_pool_name" {
-  value = aws_cognito_user_pool.user_pool.name
+output "user_pool_names" {
+  value = { for k, v in aws_cognito_user_pool.user_pool : k => v.name }
 }
 
-output "client_callback_url" {
-  value = tolist(aws_cognito_user_pool_client.user_pool_client.callback_urls)[0]
+output "client_callback_urls" {
+  value = { for k, v in aws_cognito_user_pool_client.user_pool_client : k => v.callback_urls }
 }
 
-output "user_group_id" {
-  value = aws_cognito_user_group.user_group.id
+output "user_group_ids" {
+  value = { for k, v in aws_cognito_user_group.user_group : k => v.id }
 }
